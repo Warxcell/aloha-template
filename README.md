@@ -19,7 +19,7 @@ To install, add `vm5/aloha-template` to your `composer.json` file:
 {
   "require" : {
     "vm5/aloha-template": "1.*"
-  },
+  }
 }
 ```
 
@@ -96,7 +96,6 @@ $parsed->setVariable('name', 'World');
 
 echo $parsed->paste();
 
-?>
 ```
 
 TODO
