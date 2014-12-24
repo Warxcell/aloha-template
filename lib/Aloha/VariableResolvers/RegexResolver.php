@@ -18,7 +18,8 @@ namespace Aloha\VariableResolvers;
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
  * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
  */
-class RegexResolver implements VariableResolverInterface {
+class RegexResolver implements VariableResolverInterface
+{
 
     /**
      * @var string 
@@ -38,28 +39,32 @@ class RegexResolver implements VariableResolverInterface {
     /**
      * @return string
      */
-    public function getId() {
+    public function getId()
+    {
         return 'variableResolver' . spl_object_hash($this);
     }
 
     /**
      * @param string $string
      */
-    public function setString($string) {
+    public function setString($string)
+    {
         $this->string = $string;
     }
 
     /**
      * @return array
      */
-    public function getVariables() {
+    public function getVariables()
+    {
         return $this->variables;
     }
 
     /**
      * @param array $variables
      */
-    public function setVariables($variables) {
+    public function setVariables($variables)
+    {
         $this->variables = $variables;
     }
 
@@ -67,14 +72,16 @@ class RegexResolver implements VariableResolverInterface {
      * @param string $variable
      * @param mixed $value
      */
-    public function setVariable($variable, $value) {
+    public function setVariable($variable, $value)
+    {
         $this->variables[$variable] = $value;
     }
 
     /**
      * @return string
      */
-    function getFormatMask() {
+    function getFormatMask()
+    {
         return $this->formatMask;
     }
 
@@ -84,14 +91,16 @@ class RegexResolver implements VariableResolverInterface {
      * @param string $formatMask
      * @return void
      */
-    function setFormatMask($formatMask) {
+    function setFormatMask($formatMask)
+    {
         $this->formatMask = $formatMask;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function resolve() {
+    public function resolve()
+    {
 
         return preg_replace_callback($this->formatMask, function($matches) {
 
@@ -126,10 +135,11 @@ class RegexResolver implements VariableResolverInterface {
     /**
      * {@inheritdoc}
      */
-    public function compile() {
+    public function compile()
+    {
         $objectId = $this->getId();
 
-        $output = [];
+        $output   = [];
         $output[] = sprintf('$%s = new %s;', $objectId, get_class($this));
 
         return implode(PHP_EOL, $output);

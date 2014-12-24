@@ -10,9 +10,10 @@ use Aloha\VariableResolvers\VariableResolverInterface;
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
  * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
  */
-interface AttributeInterface {
+interface AttributeInterface
+{
 
-    const ATTRIBUTE_PATTERN = '%s="%s"';
+    const ATTRIBUTE_PATTERN       = '%s="%s"';
     const ATTRIBUTE_EMPTY_PATTERN = '%s';
 
     /**

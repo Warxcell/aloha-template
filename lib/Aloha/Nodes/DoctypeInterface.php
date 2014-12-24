@@ -7,11 +7,12 @@ namespace Aloha\Nodes;
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
  * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
  */
-interface DoctypeInterface extends NodeInterface {
+interface DoctypeInterface extends NodeInterface
+{
 
-    const ID_TYPE_NONE = '';
-    const ID_TYPE_PUBLIC = 'PUBLIC';
-    const ID_TYPE_SYSTEM = 'SYSTEM';
+    const ID_TYPE_NONE    = '';
+    const ID_TYPE_PUBLIC  = 'PUBLIC';
+    const ID_TYPE_SYSTEM  = 'SYSTEM';
     const DOCTYPE_PATTERN = '<!DOCTYPE %s%s%s%s>';
 
     /**

@@ -7,12 +7,13 @@ namespace Aloha\Nodes;
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
  * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
  */
-interface ElementInterface extends NodeInterface {
+interface ElementInterface extends NodeInterface
+{
 
-    const TAG_OPEN = '<%s%s>';
-    const TAG_CLOSE = '</%s>';
+    const TAG_OPEN         = '<%s%s>';
+    const TAG_CLOSE        = '</%s>';
     const TAG_SELF_CLOSING = '<%s%s />';
-    const TAG_VOID = '<%s%s>';
+    const TAG_VOID         = '<%s%s>';
 
     /**
      * @param string $tag

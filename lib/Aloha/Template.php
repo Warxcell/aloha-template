@@ -19,13 +19,14 @@ use Aloha\VariableResolvers\RegexResolver;
  * @author VM5 Ltd. <office@vm5.bg>
  * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
  */
-class Template {
+class Template
+{
 
     // nodes
-    const NODE_DOCTYPE = 'doctype';
-    const NODE_ELEMENT = 'element';
-    const NODE_COMMENT = 'comment';
-    const NODE_TEXT = 'text';
+    const NODE_DOCTYPE   = 'doctype';
+    const NODE_ELEMENT   = 'element';
+    const NODE_COMMENT   = 'comment';
+    const NODE_TEXT      = 'text';
     const NODE_ATTRIBUTE = 'attribute';
 
     /**
@@ -42,10 +43,10 @@ class Template {
      * @var string[]
      */
     protected $nodeMapping = [
-        self::NODE_DOCTYPE => '\Aloha\Nodes\Doctype',
-        self::NODE_ELEMENT => '\Aloha\Nodes\Element',
-        self::NODE_COMMENT => '\Aloha\Nodes\Comment',
-        self::NODE_TEXT => '\Aloha\Nodes\Text',
+        self::NODE_DOCTYPE   => '\Aloha\Nodes\Doctype',
+        self::NODE_ELEMENT   => '\Aloha\Nodes\Element',
+        self::NODE_COMMENT   => '\Aloha\Nodes\Comment',
+        self::NODE_TEXT      => '\Aloha\Nodes\Text',
         self::NODE_ATTRIBUTE => '\Aloha\Attributes\Attribute'
     ];
 
@@ -64,7 +65,8 @@ class Template {
     /**
      * 
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->setParser(new HTML5Parser());
         $this->setVariableResolver(new RegexResolver());
     }
@@ -73,7 +75,8 @@ class Template {
      * @param ParserInterface $parser
      * @return void
      */
-    public function setParser(ParserInterface $parser) {
+    public function setParser(ParserInterface $parser)
+    {
         $this->parser = $parser;
         $this->parser->setTemplate($this);
     }
@@ -81,14 +84,16 @@ class Template {
     /**
      * @param VariableResolverInterface $resolver
      */
-    public function setVariableResolver($resolver) {
+    public function setVariableResolver($resolver)
+    {
         $this->variableResolver = $resolver;
     }
 
     /**
      * @return VariableResolverInterface
      */
-    public function getVariableResolver() {
+    public function getVariableResolver()
+    {
         return $this->variableResolver;
     }
 
@@ -97,7 +102,8 @@ class Template {
      * @param string $class
      * @throws \Exception
      */
-    public function overrideNodeMapping($type, $class) {
+    public function overrideNodeMapping($type, $class)
+    {
         if (!array_key_exists($type, $this->nodeMapping)) {
             throw new \Exception(sprintf('Node type "%s" does not exist!', $type));
         }
@@ -109,7 +115,8 @@ class Template {
      * @param string $class
      * @return NodeInterface;
      */
-    protected function instanceNode($class) {
+    protected function instanceNode($class)
+    {
         /* @var $node NodeInterface */
         $node = new $class;
         $node->setVariableResolver($this->variableResolver);
@@ -120,7 +127,8 @@ class Template {
      * @param string $type
      * @return NodeInterface
      */
-    public function instanceNodeByType($type) {
+    public function instanceNodeByType($type)
+    {
         return $this->instanceNode($this->nodeMapping[$type]);
     }
 
@@ -130,7 +138,8 @@ class Template {
      * @throws \Exception
      * @return void
      */
-    public function addTagMapping($tag, $class) {
+    public function addTagMapping($tag, $class)
+    {
         if (array_key_exists($tag, $this->tagMapping)) {
             throw new \Exception(sprintf('Tag "%s" is already mapped to class "%s". You can override it by using overrideTagMapping() method.', $tag, $this->tagMapping[$tag]));
         }
@@ -143,7 +152,8 @@ class Template {
      * @throws \Exception
      * @return void
      */
-    public function overrideTagMapping($tag, $class) {
+    public function overrideTagMapping($tag, $class)
+    {
         if (!array_key_exists($tag, $this->tagMapping)) {
             throw new \Exception(sprintf('Tag "%s" is not mapped to a class. You must use the addTagMapping() method.', $tag));
         }
@@ -155,7 +165,8 @@ class Template {
      * @throws \Exception
      * @return void
      */
-    public function removeTagMapping($tag) {
+    public function removeTagMapping($tag)
+    {
         if (!array_key_exists($tag, $this->tagMapping)) {
             throw new \Exception(sprintf('Tag "%s" is not mapped to a class.', $tag));
         }
@@ -166,7 +177,8 @@ class Template {
      * @param string $tag
      * @return ElementInterface
      */
-    public function instanceElementByTagName($tag) {
+    public function instanceElementByTagName($tag)
+    {
         if (array_key_exists($tag, $this->tagMapping)) {
             // use defined tag equivalent class
             return $this->instanceNode($this->tagMapping[$tag]);
@@ -181,7 +193,8 @@ class Template {
      * @throws \Exception
      * @return void
      */
-    public function addAttributeMapping($attribute, $class) {
+    public function addAttributeMapping($attribute, $class)
+    {
         if (array_key_exists($attribute, $this->attributeMapping)) {
             throw new \Exception(sprintf('Attribute "%s" is already mapped to class "%s". You can override it by using overrideAttributeMapping() method.', $attribute, $this->attributeMapping[$attribute]));
         }
@@ -195,7 +208,8 @@ class Template {
      * @throws \Exception
      * @return void
      */
-    public function overrideAttributeMapping($attribute, $class) {
+    public function overrideAttributeMapping($attribute, $class)
+    {
         if (!array_key_exists($attribute, $this->attributeMapping)) {
             throw new \Exception(sprintf('Attribute "%s" is not mapped to a class. You must use the addAttributeMapping() method.', $attribute));
         }
@@ -207,7 +221,8 @@ class Template {
      * @throws \Exception
      * @return void
      */
-    public function removeAttributeMapping($attribute) {
+    public function removeAttributeMapping($attribute)
+    {
         if (!array_key_exists($attribute, $this->attributeMapping)) {
             throw new \Exception(sprintf('Attribute "%s" is not mapped to a class.', $attribute));
         }
@@ -218,7 +233,8 @@ class Template {
      * @param string $attributeName
      * @return AttributeInterface
      */
-    public function instanceAttributeByName($attributeName) {
+    public function instanceAttributeByName($attributeName)
+    {
         if (array_key_exists($attributeName, $this->attributeMapping)) {
             return new $this->attributeMapping[$attributeName];
         } else {
@@ -230,7 +246,8 @@ class Template {
      * @param string $filename
      * @return void
      */
-    public function loadFromFile($filename) {
+    public function loadFromFile($filename)
+    {
         $this->parser->loadFromFile($filename);
     }
 
@@ -238,14 +255,16 @@ class Template {
      * @param string $string
      * @return void
      */
-    public function loadFromString($string) {
+    public function loadFromString($string)
+    {
         $this->parser->loadFromString($string);
     }
 
     /**
      * @return TextInterface
      */
-    public function parse() {
+    public function parse()
+    {
         return $this->parser->parse();
     }
 
@@ -254,7 +273,8 @@ class Template {
      * 
      * @return string
      */
-    public function compile() {
+    public function compile()
+    {
         $node = $this->parse();
         return $node->compile();
     }
@@ -263,8 +283,9 @@ class Template {
      * @param string $file File path for compiled code
      * @return bool
      */
-    public function compileToFile($file) {
-        $data = [];
+    public function compileToFile($file)
+    {
+        $data   = [];
         $data[] = '<?php' . PHP_EOL;
         $data[] = PHP_EOL;
         $data[] = '//' . PHP_EOL;
@@ -273,7 +294,7 @@ class Template {
         $data[] = '//' . PHP_EOL;
         $data[] = PHP_EOL;
         $data[] = $this->compile();
-        $code = implode('', $data);
+        $code   = implode('', $data);
 
         return file_put_contents($file, $code);
     }

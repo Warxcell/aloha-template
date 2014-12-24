@@ -9,7 +9,8 @@ use Aloha\VariableResolvers\VariableResolverInterface;
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
  * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
  */
-abstract class AbstractNode implements NodeInterface {
+abstract class AbstractNode implements NodeInterface
+{
 
     /**
      * Reference to the root node of this tree
@@ -41,7 +42,8 @@ abstract class AbstractNode implements NodeInterface {
     /**
      * 
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->children = new \SplObjectStorage();
     }
 
@@ -50,14 +52,16 @@ abstract class AbstractNode implements NodeInterface {
      * 
      * @return string
      */
-    public function getId() {
+    public function getId()
+    {
         return 'node' . spl_object_hash($this);
     }
 
     /**
      * @param VariableResolverInterface $resolver
      */
-    public function setVariableResolver(VariableResolverInterface $resolver) {
+    public function setVariableResolver(VariableResolverInterface $resolver)
+    {
         $this->variableResolver = $resolver;
     }
 
@@ -65,7 +69,8 @@ abstract class AbstractNode implements NodeInterface {
      * @param string $variable
      * @param mixed $value
      */
-    public function setVariable($variable, $value) {
+    public function setVariable($variable, $value)
+    {
         $this->variables[$variable] = $value;
 
         foreach ($this->children as $child) {
@@ -76,7 +81,8 @@ abstract class AbstractNode implements NodeInterface {
     /**
      * @return NodeInterface
      */
-    function getRoot() {
+    function getRoot()
+    {
         if (!$this->hasParent()) {
             $this->root = $this;
         }
@@ -86,7 +92,8 @@ abstract class AbstractNode implements NodeInterface {
     /**
      * @param NodeInterface $root
      */
-    function setRoot(NodeInterface $root) {
+    function setRoot(NodeInterface $root)
+    {
         $this->root = $root;
         foreach ($this->children as $child) {
             $child->setRoot($root);
@@ -96,21 +103,24 @@ abstract class AbstractNode implements NodeInterface {
     /**
      * @return bool
      */
-    public function hasChildren() {
+    public function hasChildren()
+    {
         return ($this->children->count() > 0);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getChildren() {
+    public function getChildren()
+    {
         return $this->children;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function addChild(NodeInterface $node) {
+    public function addChild(NodeInterface $node)
+    {
         $this->children->attach($node);
 
         $node->setRoot($this->getRoot());
@@ -120,21 +130,24 @@ abstract class AbstractNode implements NodeInterface {
     /**
      * {@inheritdoc}
      */
-    public function getParent() {
+    public function getParent()
+    {
         return $this->parent;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setParent(NodeInterface $node) {
+    public function setParent(NodeInterface $node)
+    {
         $this->parent = $node;
     }
 
     /**
      * @return bool
      */
-    public function hasParent() {
+    public function hasParent()
+    {
         return ($this->parent != null);
     }
 

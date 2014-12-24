@@ -9,7 +9,8 @@ use Aloha\Nodes\ElementInterface;
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
  * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
  */
-class IdAttribute extends Attribute {
+class IdAttribute extends Attribute
+{
 
     /**
      * @var string
@@ -24,7 +25,8 @@ class IdAttribute extends Attribute {
     /**
      * {@inheritdoc}
      */
-    public function setElement(ElementInterface $element) {
+    public function setElement(ElementInterface $element)
+    {
         parent::setElement($element);
 
         $this->mapElementToId();
@@ -33,7 +35,8 @@ class IdAttribute extends Attribute {
     /**
      * {@inheritdoc}
      */
-    public function setValue($value) {
+    public function setValue($value)
+    {
         parent::setValue($value);
 
         $this->mapElementToId();
@@ -42,7 +45,8 @@ class IdAttribute extends Attribute {
     /**
      * @return void
      */
-    protected function mapElementToId() {
+    protected function mapElementToId()
+    {
         if ($this->value == null) {
             return;
         }
@@ -59,7 +63,8 @@ class IdAttribute extends Attribute {
      * @param string $id
      * @return ElementInterface
      */
-    public function findElementById($id) {
+    public function findElementById($id)
+    {
 
         $mapping = $this->idToElementMapping;
 

@@ -9,7 +9,8 @@ use Aloha\Attributes\AttributeInterface;
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
  * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
  */
-class Element extends AbstractNode implements ElementInterface {
+class Element extends AbstractNode implements ElementInterface
+{
 
     /**
      * @var string 
@@ -34,28 +35,32 @@ class Element extends AbstractNode implements ElementInterface {
     /**
      * {@inheritdoc}
      */
-    public function getAttributes() {
+    public function getAttributes()
+    {
         return $this->attributes;
     }
 
     /**
      * @param string $key
      */
-    public function hasAttribute($key) {
+    public function hasAttribute($key)
+    {
         return array_key_exists($key, $this->attributes);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setAttributes($attributes) {
+    public function setAttributes($attributes)
+    {
         $this->attributes = $attributes;
     }
 
     /**
      * @param string $key
      */
-    public function getAttribute($key) {
+    public function getAttribute($key)
+    {
         if ($this->hasAttribute($key)) {
             return $this->attributes[$key];
         }
@@ -65,21 +70,24 @@ class Element extends AbstractNode implements ElementInterface {
      * @param string $key
      * @param string $value
      */
-    public function setAttribute(AttributeInterface $attribute) {
+    public function setAttribute(AttributeInterface $attribute)
+    {
         $this->attributes[$attribute->getKey()] = $attribute;
     }
 
     /**
      * @param string $key
      */
-    public function removeAttribute($key) {
+    public function removeAttribute($key)
+    {
         unset($this->attributes[$key]);
     }
 
     /**
      * @return string
      */
-    protected function pasteAttributes() {
+    protected function pasteAttributes()
+    {
         if (!$this->attributes) {
             return '';
         }
@@ -93,49 +101,56 @@ class Element extends AbstractNode implements ElementInterface {
     /**
      * {@inheritdoc}
      */
-    public function getTag() {
+    public function getTag()
+    {
         return $this->tag;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setTag($tag) {
+    public function setTag($tag)
+    {
         $this->tag = $tag;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getIsSelfClosing() {
+    public function getIsSelfClosing()
+    {
         return $this->isSelfClosing;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setIsSelfClosing($isSelfClosing) {
+    public function setIsSelfClosing($isSelfClosing)
+    {
         $this->isSelfClosing = $isSelfClosing;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getIsVoid() {
+    public function getIsVoid()
+    {
         return $this->isVoid;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setIsVoid($isVoid) {
+    public function setIsVoid($isVoid)
+    {
         $this->isVoid = $isVoid;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function paste() {
+    public function paste()
+    {
         if ($this->isSelfClosing) {
             $return = sprintf(self::TAG_SELF_CLOSING, $this->tag, $this->pasteAttributes());
         } elseif ($this->isVoid) {
@@ -154,11 +169,12 @@ class Element extends AbstractNode implements ElementInterface {
     /**
      * {@inheritdoc}
      */
-    public function compile($variableResolverObjectId = null) {
+    public function compile($variableResolverObjectId = null)
+    {
         $output = [];
 
         if ($variableResolverObjectId == null) {
-            $output[] = $this->variableResolver->compile() . PHP_EOL;
+            $output[]                 = $this->variableResolver->compile() . PHP_EOL;
             $variableResolverObjectId = $this->variableResolver->getId();
         }
 

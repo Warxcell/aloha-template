@@ -7,7 +7,8 @@ namespace Aloha\Nodes;
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
  * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
  */
-class Doctype extends AbstractNode implements DoctypeInterface {
+class Doctype extends AbstractNode implements DoctypeInterface
+{
 
     /**
      * @var string 
@@ -29,23 +30,28 @@ class Doctype extends AbstractNode implements DoctypeInterface {
      */
     protected $systemId;
 
-    public function setIdType($type) {
+    public function setIdType($type)
+    {
         $this->idType = $type;
     }
 
-    public function setPublicId($id) {
+    public function setPublicId($id)
+    {
         $this->publicId = $id;
     }
 
-    public function setRootElementName($name) {
+    public function setRootElementName($name)
+    {
         $this->rootElementName = $name;
     }
 
-    public function setSystemId($id) {
+    public function setSystemId($id)
+    {
         $this->systemId = $id;
     }
 
-    public function paste() {
+    public function paste()
+    {
         $idType = '';
         if ($this->idType) {
             $idType = ' ' . $this->idType;
@@ -68,21 +74,24 @@ class Doctype extends AbstractNode implements DoctypeInterface {
      * @param NodeInterface $node
      * @throws Exception
      */
-    public function addChild(NodeInterface $node) {
+    public function addChild(NodeInterface $node)
+    {
         throw new \Exception('Cannot add child to Doctype node!');
     }
 
     /**
      * @throws Exception
      */
-    public function getChildren() {
+    public function getChildren()
+    {
         throw new \Exception('Doctype node has no child elements');
     }
 
     /**
      * @return boolean
      */
-    public function hasChildren() {
+    public function hasChildren()
+    {
         return false;
     }
 
@@ -90,11 +99,12 @@ class Doctype extends AbstractNode implements DoctypeInterface {
      * @param string $variableResolverObjectId
      * @return string
      */
-    public function compile($variableResolverObjectId = null) {
+    public function compile($variableResolverObjectId = null)
+    {
         $output = [];
 
         if ($variableResolverObjectId == null) {
-            $output[] = $this->variableResolver->compile() . PHP_EOL;
+            $output[]                 = $this->variableResolver->compile() . PHP_EOL;
             $variableResolverObjectId = $this->variableResolver->getId();
         }
 

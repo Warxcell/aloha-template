@@ -10,7 +10,8 @@ use Aloha\TextInterface;
  * @author VM5 Ltd. <office@vm5.bg>
  * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
  */
-interface ParserInterface {
+interface ParserInterface
+{
 
     /**
      * @param Template $template

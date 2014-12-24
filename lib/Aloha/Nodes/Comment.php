@@ -7,7 +7,8 @@ namespace Aloha\Nodes;
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
  * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
  */
-class Comment extends AbstractNode implements CommentInterface {
+class Comment extends AbstractNode implements CommentInterface
+{
 
     /**
      * @var string
@@ -17,32 +18,36 @@ class Comment extends AbstractNode implements CommentInterface {
     /**
      * {@inheritdoc}
      */
-    public function setContent($content) {
+    public function setContent($content)
+    {
         $this->content = $content;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function paste() {
+    public function paste()
+    {
         return sprintf(self::COMMENT_PATTERN, $this->content);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function compile($variableResolverObjectId = null) {
+    public function compile($variableResolverObjectId = null)
+    {
         $output = [];
 
         if ($variableResolverObjectId == null) {
-            $output[] = $this->variableResolver->compile() . PHP_EOL;
+            $output[]                 = $this->variableResolver->compile() . PHP_EOL;
             $variableResolverObjectId = $this->variableResolver->getId();
         }
 

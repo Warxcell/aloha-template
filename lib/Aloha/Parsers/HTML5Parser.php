@@ -17,7 +17,8 @@ use Masterminds\HTML5\Parser\Scanner;
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
  * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
  */
-class HTML5Parser implements EventHandler, ParserInterface {
+class HTML5Parser implements EventHandler, ParserInterface
+{
 
     /**
      * @var Tokenizer
@@ -70,14 +71,16 @@ class HTML5Parser implements EventHandler, ParserInterface {
      * @param string $tag
      * @return bool
      */
-    protected function isVoid($tag) {
+    protected function isVoid($tag)
+    {
         return in_array($tag, $this->voidElementTags);
     }
 
     /**
      * @inheritdoc
      */
-    public function loadFromFile($file) {
+    public function loadFromFile($file)
+    {
         if ($file != null) {
             $this->loadFromString(file_get_contents($file));
         }
@@ -86,16 +89,18 @@ class HTML5Parser implements EventHandler, ParserInterface {
     /**
      * @inheritdoc
      */
-    public function loadFromString($string) {
-        $input = new StringInputStream($string);
-        $scanner = new Scanner($input);
+    public function loadFromString($string)
+    {
+        $input           = new StringInputStream($string);
+        $scanner         = new Scanner($input);
         $this->tokenizer = new Tokenizer($scanner, $this);
     }
 
     /**
      * @inheritdoc
      */
-    public function parse() {
+    public function parse()
+    {
         // root element
         $this->currentNodes[$this->depth] = $this->template->instanceNodeByType(Template::NODE_TEXT);
         $this->tokenizer->parse();
@@ -106,14 +111,16 @@ class HTML5Parser implements EventHandler, ParserInterface {
      * @param Template $template
      * @return void
      */
-    public function setTemplate(Template $template) {
+    public function setTemplate(Template $template)
+    {
         $this->template = $template;
     }
 
     /**
      * @return void
      */
-    public function eof() {
+    public function eof()
+    {
         // ignore for now...
     }
 
@@ -123,9 +130,10 @@ class HTML5Parser implements EventHandler, ParserInterface {
      * @param type $col
      * @return void
      */
-    public function parseError($msg, $line, $col) {
+    public function parseError($msg, $line, $col)
+    {
         $message = 'XML error: %s at line %d, column %d';
-        $error = sprintf($message, $msg, $line, $col);
+        $error   = sprintf($message, $msg, $line, $col);
         throw new \Exception($error);
     }
 
@@ -134,7 +142,8 @@ class HTML5Parser implements EventHandler, ParserInterface {
      * @param string $data
      * @return void
      */
-    public function processingInstruction($name, $data = null) {
+    public function processingInstruction($name, $data = null)
+    {
         // ignore for now...
     }
 
@@ -145,9 +154,10 @@ class HTML5Parser implements EventHandler, ParserInterface {
      * @param bool $quirks
      * @return void
      */
-    public function doctype($name, $idType = 0, $id = null, $quirks = false) {
+    public function doctype($name, $idType = 0, $id = null, $quirks = false)
+    {
         $idTypeMapping = [
-            self::DOCTYPE_NONE => DoctypeInterface::ID_TYPE_NONE,
+            self::DOCTYPE_NONE   => DoctypeInterface::ID_TYPE_NONE,
             self::DOCTYPE_PUBLIC => DoctypeInterface::ID_TYPE_PUBLIC,
             self::DOCTYPE_SYSTEM => DoctypeInterface::ID_TYPE_SYSTEM
         ];
@@ -167,13 +177,14 @@ class HTML5Parser implements EventHandler, ParserInterface {
      * @param bool $selfClosing
      * @return void
      */
-    public function startTag($name, $attributes = array(), $selfClosing = false) {
+    public function startTag($name, $attributes = array(), $selfClosing = false)
+    {
         $element = $this->template->instanceElementByTagName($name);
 
         $nodeAttributes = [];
 
         foreach ($attributes as $key => $value) {
-            $attribute = $this->template->instanceAttributeByName($key);
+            $attribute            = $this->template->instanceAttributeByName($key);
             $attribute->setElement($element);
             $attribute->setKey($key);
             $attribute->setValue($value);
@@ -201,7 +212,8 @@ class HTML5Parser implements EventHandler, ParserInterface {
      * @param string $name
      * @return void
      */
-    public function endTag($name) {
+    public function endTag($name)
+    {
         if ($this->isVoid($name)) {
             return;
         }
@@ -212,7 +224,8 @@ class HTML5Parser implements EventHandler, ParserInterface {
      * @param string $cdata
      * @return void
      */
-    public function text($cdata) {
+    public function text($cdata)
+    {
         /* @var $node TextInterface */
         $node = $this->template->instanceNodeByType(Template::NODE_TEXT);
         $node->setContent($cdata);
@@ -224,7 +237,8 @@ class HTML5Parser implements EventHandler, ParserInterface {
      * @param string $data
      * @return void
      */
-    public function cdata($data) {
+    public function cdata($data)
+    {
         $this->text($data);
     }
 
@@ -232,7 +246,8 @@ class HTML5Parser implements EventHandler, ParserInterface {
      * @param string $cdata
      * @return void
      */
-    public function comment($cdata) {
+    public function comment($cdata)
+    {
         /* @var $node CommentInterface */
         $node = $this->template->instanceNodeByType(Template::NODE_COMMENT);
         $node->setContent($cdata);
