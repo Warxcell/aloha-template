@@ -1,0 +1,32 @@
+{
+    "name": "vm5/aloha-template",
+    "type": "library",
+    "description": "Aloha Template Engine",
+    "keywords": ["templating"],
+    "homepage": "http://www.vm5.bg/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Borislav Lesichkov",
+            "email": "lesichkov@gmail.com"
+        },
+        {
+            "name": "Ivan Slavkov",
+            "email": "ivan.slavkov@gmail.com"
+        },
+        {
+            "name": "VM5 Ltd.",
+            "email": "office@vm5.bg"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5.0",
+        "masterminds/html5": "2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Aloha\\": "lib/"
+        }
+    }
+}
