@@ -5,8 +5,16 @@ What is Aloha Template?
 -----------------------
 
 Aloha Template is PHP 5.5 templating engine. It's default parser uses the
-[Mastermins HTML5 PHP library](https://github.com/Masterminds/html5-php). With the default implementation the engine parses
-(X)HTML files and build DOM like trees of node objects.
+[Masterminds HTML5 PHP library](https://github.com/Masterminds/html5-php). 
+With the default implementation the engine parses(X)HTML files and build DOM like 
+trees of node objects.
+
+Philosophy
+----------
+
+The main philosophy behind Aloha Template Engine, is that there is no need to 
+invent new/another programming language to create (X)HTML templates. The HTML
+itself is so powerful language so the only syntax in the template is HTML.
 
 Installation
 ------------
@@ -45,6 +53,11 @@ defined in Aloha\Nodes:
 The Aloha\Nodes\NodeInterface is common for the above interfaces and should not be
 implemented alone.
 
+Nodes can be used to create more complex objects like widgets, gadgets, controllers,
+partials or whatever you call them. You can create your own HTML tags with some 
+behaviour. For example, you can create `Hyperlink` class which can render an `<a>` 
+tag and also the parser can instance all `<a>` tags as `Hyperlink` class for you in PHP.
+
 Attributes
 ----------
 
@@ -54,7 +67,20 @@ of the HTML elements (Aloha\Nodes\Element). You can define your own.
 Variables
 ---------
 
-TODO
+Template variables are defined within single curly braces - `{` and `}`. This is the
+only non-HTML syntax in the Aloha Template Engine. If you don't assign any value 
+to a variable, it will be replaced with empty string. Also variables support nesting/chaining
+by using dots between the different variables (`{variable.subvariable.subsubvariable}`)
+Values can be either multidimensional arrays, also chaining objects with public 
+properties.
+Example: `{variable}` can be assigned within PHP by ```php NodeInterface::setVariable($variable, $value)```
+method where `$variable` is the name between the curly braces and the `$value` can be
+either simple variable, either complex  associative array or object. This can be 
+useful if you pass whole objects or arrays to the template. 
+For example: `$user` is an associative array which is result of database selection
+and the whole array can be passed to the `NodeInterface::setVariable('user', $user)`. 
+In the template you can define `{user.name}`, `{user.email}`, `{user.phone}` etc. 
+with no need to pass every variable alone to the template engine.
 
 
 Usage
@@ -82,7 +108,7 @@ file.php
 <?php
 
 // if you use composer
-require "vendor/autoload.php";
+require 'vendor/autoload.php';
 
 $template = new Aloha\Template();
 // read HTML from a file
@@ -93,7 +119,6 @@ $parsed = $template->parse();
 
 $parsed->setVariable('name', 'World');
 
-
 echo $parsed->paste();
 
 ```
@@ -101,5 +126,8 @@ echo $parsed->paste();
 TODO
 ----
 
-- finders by id attribute, attribute names, classes etc;
+- node finders by id attribute, attribute names, classes etc;
+- documentation examples;
+- a caching mechanism of the parsed filed (file cache, array cache, memcache, redis, etc);
+- Symfony Template Engine implementation; 
 - unit tests.
