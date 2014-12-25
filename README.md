@@ -57,6 +57,8 @@ Nodes can be used to create more complex objects like widgets, gadgets, controll
 partials or whatever you call them. You can create your own HTML tags with some 
 behaviour. For example, you can create `Hyperlink` class which can render an `<a>` 
 tag and also the parser can instance all `<a>` tags as `Hyperlink` class for you in PHP.
+This can be done by mapping your `Hyperlink` class with the `Template::addTagMapping($tag, $class)`
+method.
 
 Attributes
 ----------
@@ -73,7 +75,7 @@ to a variable, it will be replaced with empty string. Also variables support nes
 by using dots between the different variables (`{variable.subvariable.subsubvariable}`)
 Values can be either multidimensional arrays, also chaining objects with public 
 properties.
-Example: `{variable}` can be assigned within PHP by ```php NodeInterface::setVariable($variable, $value)```
+Example: `{variable}` can be assigned within PHP by `NodeInterface::setVariable($variable, $value)`
 method where `$variable` is the name between the curly braces and the `$value` can be
 either simple variable, either complex  associative array or object. This can be 
 useful if you pass whole objects or arrays to the template. 
