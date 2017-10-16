@@ -21,6 +21,8 @@ class Text extends AbstractNode implements TextInterface
     public function setContent($content)
     {
         $this->content = $content;
+
+        return $this;
     }
 
     /**
@@ -67,19 +69,22 @@ class Text extends AbstractNode implements TextInterface
         }
 
         $objectId = $this->getId();
-        $output[] = sprintf('$%s = new %s;', $objectId, get_class($this));
-        $output[] = sprintf('$%s->setVariableResolver($%s);', $objectId, $variableResolverObjectId);
-        $output[] = sprintf('$%s->setContent(\'%s\');', $objectId, $this->getContent()); // !!! content need to be escaped
+        $output[] = sprintf('$%s = new %s()', $objectId, get_class($this));
+        $output[] = sprintf('   ->setVariableResolver($%s)', $variableResolverObjectId);
+        $output[] = sprintf('   ->setContent(\'%s\')', $this->getContent()); // !!! content need to be escaped
 
         if ($this->hasChildren()) {
             foreach ($this->children as $child) {
-                $output[] = sprintf('$%s->addChild($%s);', $objectId, $child->getId());
+                $output[] = sprintf('   ->addChild($%s)', $child->getId());
             }
         }
+
+        $output[] = ';';
 
         if (!$this->hasParent()) {
             $output[] = PHP_EOL;
             $output[] = sprintf('return $%s;', $objectId);
+            $output[] = PHP_EOL;
         }
 
         return implode(PHP_EOL, $output);

@@ -16,8 +16,8 @@ use Aloha\VariableResolvers\RegexResolver;
  * 
  * @author Borislav Lesichkov <lesichkov@gmail.com>
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
- * @author VM5 Ltd. <office@vm5.bg>
- * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
+ * @author VM5 Ltd. <office@vm5.eu>
+ * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.eu/)
  */
 class Template
 {
@@ -141,7 +141,8 @@ class Template
     public function addTagMapping($tag, $class)
     {
         if (array_key_exists($tag, $this->tagMapping)) {
-            throw new \Exception(sprintf('Tag "%s" is already mapped to class "%s". You can override it by using overrideTagMapping() method.', $tag, $this->tagMapping[$tag]));
+            throw new \Exception(sprintf('Tag "%s" is already mapped to class "%s". 
+            You can override it by using overrideTagMapping() method.', $tag, $this->tagMapping[$tag]));
         }
         $this->tagMapping[$tag] = $class;
     }
@@ -155,7 +156,8 @@ class Template
     public function overrideTagMapping($tag, $class)
     {
         if (!array_key_exists($tag, $this->tagMapping)) {
-            throw new \Exception(sprintf('Tag "%s" is not mapped to a class. You must use the addTagMapping() method.', $tag));
+            throw new \Exception(sprintf('Tag "%s" is not mapped to a class. 
+            You must use the addTagMapping() method.', $tag));
         }
         $this->tagMapping[$tag] = $class;
     }
@@ -196,7 +198,8 @@ class Template
     public function addAttributeMapping($attribute, $class)
     {
         if (array_key_exists($attribute, $this->attributeMapping)) {
-            throw new \Exception(sprintf('Attribute "%s" is already mapped to class "%s". You can override it by using overrideAttributeMapping() method.', $attribute, $this->attributeMapping[$attribute]));
+            throw new \Exception(sprintf('Attribute "%s" is already mapped to class "%s". 
+            You can override it by using overrideAttributeMapping() method.', $attribute, $this->attributeMapping[$attribute]));
         }
 
         $this->attributeMapping[$attribute] = $class;
@@ -211,7 +214,8 @@ class Template
     public function overrideAttributeMapping($attribute, $class)
     {
         if (!array_key_exists($attribute, $this->attributeMapping)) {
-            throw new \Exception(sprintf('Attribute "%s" is not mapped to a class. You must use the addAttributeMapping() method.', $attribute));
+            throw new \Exception(sprintf('Attribute "%s" is not mapped to a class. 
+            You must use the addAttributeMapping() method.', $attribute));
         }
         $this->attributeMapping[$attribute] = $class;
     }

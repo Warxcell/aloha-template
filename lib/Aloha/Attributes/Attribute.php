@@ -56,6 +56,8 @@ class Attribute implements AttributeInterface
     public function setElement(ElementInterface $element)
     {
         $this->element = $element;
+
+        return $this;
     }
 
     /**
@@ -72,6 +74,8 @@ class Attribute implements AttributeInterface
     public function setVariableResolver(VariableResolverInterface $resolver)
     {
         $this->variableResolver = $resolver;
+
+        return $this;
     }
 
     /**
@@ -96,6 +100,8 @@ class Attribute implements AttributeInterface
     public function setKey($key)
     {
         $this->key = $key;
+
+        return $this;
     }
 
     /**
@@ -104,6 +110,8 @@ class Attribute implements AttributeInterface
     public function setValue($value)
     {
         $this->value = $value;
+
+        return $this;
     }
 
     /**
@@ -132,13 +140,14 @@ class Attribute implements AttributeInterface
         }
 
         $objectId = $this->getId();
-        $output[] = sprintf('$%s = new %s;', $objectId, get_class($this));
-        $output[] = sprintf('$%s->setElement($%s);', $objectId, $this->element->getId());
-        $output[] = sprintf('$%s->setVariableResolver($%s);', $objectId, $variableResolverObjectId);
-        $output[] = sprintf('$%s->setKey(\'%s\');', $objectId, $this->key);
+        $output[] = sprintf('$%s = new %s()', $objectId, get_class($this));
+        $output[] = sprintf('   ->setElement($%s)', $this->element->getId());
+        $output[] = sprintf('   ->setVariableResolver($%s)', $variableResolverObjectId);
+        $output[] = sprintf('   ->setKey(\'%s\')', $this->key);
         if ($this->value !== null) {
-            $output[] = sprintf('$%s->setValue(\'%s\');', $objectId, $this->value);
+            $output[] = sprintf('   ->setValue(\'%s\')',  $this->value);
         }
+        $output[] = ';';
 
         return implode(PHP_EOL, $output);
     }

@@ -12,11 +12,12 @@ namespace Aloha\VariableResolvers;
  * {variable.subvariable}
  * or
  * {variable.subvariable.subsubvariable.[...]}
+ *
  *  
  * 
- * @author VM5 Ltd. <office@vm5.bg>
+ * @author VM5 Ltd. <office@vm5.eu>
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
- * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
+ * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.eu/)
  */
 class RegexResolver implements VariableResolverInterface
 {
@@ -50,6 +51,8 @@ class RegexResolver implements VariableResolverInterface
     public function setString($string)
     {
         $this->string = $string;
+
+        return $this;
     }
 
     /**
@@ -66,6 +69,8 @@ class RegexResolver implements VariableResolverInterface
     public function setVariables($variables)
     {
         $this->variables = $variables;
+
+        return $this;
     }
 
     /**
@@ -75,6 +80,8 @@ class RegexResolver implements VariableResolverInterface
     public function setVariable($variable, $value)
     {
         $this->variables[$variable] = $value;
+
+        return $this;
     }
 
     /**
@@ -94,6 +101,8 @@ class RegexResolver implements VariableResolverInterface
     function setFormatMask($formatMask)
     {
         $this->formatMask = $formatMask;
+
+        return $this;
     }
 
     /**
@@ -140,7 +149,7 @@ class RegexResolver implements VariableResolverInterface
         $objectId = $this->getId();
 
         $output   = [];
-        $output[] = sprintf('$%s = new %s;', $objectId, get_class($this));
+        $output[] = sprintf('$%s = new %s();', $objectId, get_class($this));
 
         return implode(PHP_EOL, $output);
     }

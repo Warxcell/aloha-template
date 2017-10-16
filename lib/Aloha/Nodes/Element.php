@@ -5,9 +5,9 @@ namespace Aloha\Nodes;
 use Aloha\Attributes\AttributeInterface;
 
 /**
- * @author VM5 Ltd. <office@vm5.bg>
+ * @author VM5 Ltd. <office@vm5.eu>
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
- * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
+ * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.eu/)
  */
 class Element extends AbstractNode implements ElementInterface
 {
@@ -54,6 +54,8 @@ class Element extends AbstractNode implements ElementInterface
     public function setAttributes($attributes)
     {
         $this->attributes = $attributes;
+
+        return $this;
     }
 
     /**
@@ -73,6 +75,8 @@ class Element extends AbstractNode implements ElementInterface
     public function setAttribute(AttributeInterface $attribute)
     {
         $this->attributes[$attribute->getKey()] = $attribute;
+
+        return $this;
     }
 
     /**
@@ -81,6 +85,8 @@ class Element extends AbstractNode implements ElementInterface
     public function removeAttribute($key)
     {
         unset($this->attributes[$key]);
+
+        return $this;
     }
 
     /**
@@ -112,6 +118,8 @@ class Element extends AbstractNode implements ElementInterface
     public function setTag($tag)
     {
         $this->tag = $tag;
+
+        return $this;
     }
 
     /**
@@ -128,6 +136,8 @@ class Element extends AbstractNode implements ElementInterface
     public function setIsSelfClosing($isSelfClosing)
     {
         $this->isSelfClosing = $isSelfClosing;
+
+        return $this;
     }
 
     /**
@@ -144,6 +154,8 @@ class Element extends AbstractNode implements ElementInterface
     public function setIsVoid($isVoid)
     {
         $this->isVoid = $isVoid;
+
+        return $this;
     }
 
     /**
@@ -185,22 +197,23 @@ class Element extends AbstractNode implements ElementInterface
         }
 
         $objectId = $this->getId();
-        $output[] = sprintf('$%s = new %s;', $objectId, get_class($this));
-        $output[] = sprintf('$%s->setVariableResolver($%s);', $objectId, $variableResolverObjectId);
-        $output[] = sprintf('$%s->setTag(\'%s\');', $objectId, $this->tag);
+        $output[] = sprintf('$%s = new %s()', $objectId, get_class($this));
+        $output[] = sprintf('   ->setVariableResolver($%s)', $variableResolverObjectId);
+        $output[] = sprintf('   ->setTag(\'%s\')', $this->tag);
 
         $isSelfClosing = 'false';
         if ($this->isSelfClosing) {
             $isSelfClosing = 'true';
         }
-        $output[] = sprintf('$%s->setIsSelfClosing(%s);', $objectId, $isSelfClosing);
+        $output[] = sprintf('   ->setIsSelfClosing(%s)', $isSelfClosing);
 
         $isVoid = 'false';
         if ($this->isVoid) {
             $isVoid = 'true';
         }
 
-        $output[] = sprintf('$%s->setIsVoid(%s);', $objectId, $isVoid);
+        $output[] = sprintf('   ->setIsVoid(%s)', $isVoid);
+        $output[] = ';';
 
         if ($this->attributes != null) {
             foreach ($this->attributes as $attribute) {

@@ -63,6 +63,7 @@ abstract class AbstractNode implements NodeInterface
     public function setVariableResolver(VariableResolverInterface $resolver)
     {
         $this->variableResolver = $resolver;
+        return $this;
     }
 
     /**
@@ -76,6 +77,8 @@ abstract class AbstractNode implements NodeInterface
         foreach ($this->children as $child) {
             $child->setVariable($variable, $value);
         }
+
+        return $this;
     }
 
     /**
@@ -98,6 +101,8 @@ abstract class AbstractNode implements NodeInterface
         foreach ($this->children as $child) {
             $child->setRoot($root);
         }
+
+        return $this;
     }
 
     /**
@@ -125,6 +130,8 @@ abstract class AbstractNode implements NodeInterface
 
         $node->setRoot($this->getRoot());
         $node->setParent($this);
+
+        return $this;
     }
 
     /**
@@ -141,6 +148,8 @@ abstract class AbstractNode implements NodeInterface
     public function setParent(NodeInterface $node)
     {
         $this->parent = $node;
+
+        return $this;
     }
 
     /**

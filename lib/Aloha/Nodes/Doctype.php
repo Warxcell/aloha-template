@@ -33,21 +33,29 @@ class Doctype extends AbstractNode implements DoctypeInterface
     public function setIdType($type)
     {
         $this->idType = $type;
+
+        return $this;
     }
 
     public function setPublicId($id)
     {
         $this->publicId = $id;
+
+        return $this;
     }
 
     public function setRootElementName($name)
     {
         $this->rootElementName = $name;
+
+        return $this;
     }
 
     public function setSystemId($id)
     {
         $this->systemId = $id;
+
+        return $this;
     }
 
     public function paste()

@@ -3,9 +3,9 @@
 namespace Aloha\Nodes;
 
 /**
- * @author VM5 Ltd. <office@vm5.bg>
+ * @author VM5 Ltd. <office@vm5.eu>
  * @author Ivan Slavkov <ivan.slavkov@gmail.com>
- * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.bg/)
+ * @copyright (c) 2014, VM5 Ltd. (http://www.vm5.eu/)
  */
 class Comment extends AbstractNode implements CommentInterface
 {
@@ -21,6 +21,8 @@ class Comment extends AbstractNode implements CommentInterface
     public function setContent($content)
     {
         $this->content = $content;
+
+        return $this;
     }
 
     /**
@@ -52,9 +54,10 @@ class Comment extends AbstractNode implements CommentInterface
         }
 
         $objectId = $this->getId();
-        $output[] = sprintf('$%s = new %s;', $objectId, get_class($this));
-        $output[] = sprintf('$%s->setVariableResolver($%s);', $objectId, $variableResolverObjectId);
-        $output[] = sprintf('$%s->setContent(\'%s\');', $objectId, $this->getContent()); // !!! content need to be escaped
+        $output[] = sprintf('$%s = new %s()', $objectId, get_class($this));
+        $output[] = sprintf('   ->setVariableResolver($%s)', $variableResolverObjectId);
+        $output[] = sprintf('   ->setContent(\'%s\')', $this->getContent()); // !!! content need to be escaped
+        $output[] = ';';
 
         return implode(PHP_EOL, $output);
     }
